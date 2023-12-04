@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/provalLP2_2BIM/static/css/main.241951ba.css",
-    "main.js": "/provalLP2_2BIM/static/js/main.2101c602.js",
+    "main.js": "/provalLP2_2BIM/static/js/main.11061bb7.js",
     "index.html": "/provalLP2_2BIM/index.html",
     "main.241951ba.css.map": "/provalLP2_2BIM/static/css/main.241951ba.css.map",
-    "main.2101c602.js.map": "/provalLP2_2BIM/static/js/main.2101c602.js.map"
+    "main.11061bb7.js.map": "/provalLP2_2BIM/static/js/main.11061bb7.js.map"
   },
   "entrypoints": [
     "static/css/main.241951ba.css",
-    "static/js/main.2101c602.js"
+    "static/js/main.11061bb7.js"
   ]
 }

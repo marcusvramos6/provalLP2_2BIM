@@ -5,6 +5,7 @@ import Page from "./components/page.jsx";
 import { Chat } from "./screens/chat-screen/chat-screen.jsx";
 import { Provider } from "react-redux";
 import store from "./redux/store.js";
+import { Alert } from "react-bootstrap";
 
 function App() {
   return (
@@ -29,6 +30,14 @@ function App() {
               }
             />
             <Route path="/" element={<MenuScreen />} />
+            <Route
+              path="*"
+              element={
+                <Page>
+                  <Alert variant="danger">Essa url não está mapeada</Alert>
+                </Page>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </Provider>

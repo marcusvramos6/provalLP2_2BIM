@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/provalLP2_2BIM/static/css/main.241951ba.css",
-    "main.js": "/provalLP2_2BIM/static/js/main.ef8846d6.js",
+    "main.js": "/provalLP2_2BIM/static/js/main.dcef4863.js",
     "index.html": "/provalLP2_2BIM/index.html",
     "main.241951ba.css.map": "/provalLP2_2BIM/static/css/main.241951ba.css.map",
-    "main.ef8846d6.js.map": "/provalLP2_2BIM/static/js/main.ef8846d6.js.map"
+    "main.dcef4863.js.map": "/provalLP2_2BIM/static/js/main.dcef4863.js.map"
   },
   "entrypoints": [
     "static/css/main.241951ba.css",
-    "static/js/main.ef8846d6.js"
+    "static/js/main.dcef4863.js"
   ]
 }

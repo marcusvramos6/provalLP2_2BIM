@@ -83,7 +83,7 @@ export const toggleReadStatus = createAsyncThunk(
 
       body: JSON.stringify({
         id: id,
-        lida: false,
+        lida: !status,
       }),
     }).catch((erro) => {
       return {
@@ -101,9 +101,30 @@ export const toggleReadStatus = createAsyncThunk(
     } else {
       return {
         status: false,
-        mensagem: "Ocorreu um erro ao adicionar o user.",
+        mensagem: "Ocorreu um erro ao atualizar o user.",
         messageId: id,
       };
+    }
+  }
+);
+
+export const deleteMessage = createAsyncThunk(
+  "mensagem/deleteMessage",
+  async (messageId) => {
+    const response = await fetch(`${urlBase}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id: messageId,
+      }),
+    });
+
+    if (response.ok) {
+      return messageId;
+    } else {
+      throw new Error("Erro ao excluir a mensagem.");
     }
   }
 );
@@ -169,6 +190,22 @@ const chatSlice = createSlice({
         if (messageToUpdate) {
           messageToUpdate.lida = !messageToUpdate.lida; // Inverte o estado de lida (lida <-> não lida)
         }
+      })
+      .addCase(deleteMessage.pending, (state) => {
+        state.estado = ESTADO.PENDENTE;
+        state.mensagem = "Excluindo mensagem...";
+      })
+      .addCase(deleteMessage.fulfilled, (state, action) => {
+        const messageId = action.payload;
+        state.estado = ESTADO.SUCESSO;
+        state.mensagem = "Mensagem excluída com sucesso!";
+        state.listaMensagens = state.listaMensagens.filter(
+          (message) => message.id !== messageId
+        );
+      })
+      .addCase(deleteMessage.rejected, (state) => {
+        state.estado = ESTADO.ERRO;
+        state.mensagem = "Erro ao excluir a mensagem.";
       });
   },
 });

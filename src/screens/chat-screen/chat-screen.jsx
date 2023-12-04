@@ -5,6 +5,7 @@ import { buscarUsers } from "../../redux/user-reducer";
 import {
   adicionarMensagem,
   buscarMensagens,
+  deleteMessage,
   setEstadoOcioso,
   toggleReadStatus,
 } from "../../redux/chat-reducer";
@@ -31,6 +32,22 @@ export const Chat = () => {
 
   const handleMessageChange = (e) => {
     setMensagem(e.target.value);
+  };
+
+  const subtractThreeHours = (timestamp) => {
+    const date = new Date(timestamp);
+    date.setHours(date.getHours() - 3); // Subtraindo 3 horas
+    return date.toLocaleString(); // Convertendo para string no formato desejado
+  };
+
+  const isMessageOld = (messageTimestamp) => {
+    const messageTime = new Date(messageTimestamp).getTime();
+    const currentTime = new Date().getTime();
+    const differenceInMinutes = Math.floor(
+      (currentTime - messageTime) / (1000 * 60)
+    ); // Diferença em minutos
+
+    return differenceInMinutes > 5;
   };
 
   const handleSubmit = (e) => {
@@ -87,9 +104,10 @@ export const Chat = () => {
                 style={{ width: "30px", height: "30px" }}
               />
               <span>
-                <strong>{conversation.usuario.nickname}:</strong> {conversation.mensagem}
+                <strong>{conversation.usuario.nickname}:</strong>{" "}
+                {conversation.mensagem}
                 <br />
-                <small>Enviada em: {conversation.dataHora}</small>
+                <small>Enviada em: {subtractThreeHours(conversation.dataHora)}</small>
                 <br />
                 <button
                   onClick={() =>
@@ -100,6 +118,13 @@ export const Chat = () => {
                   {conversation.lida
                     ? "Marcar como Não Lida"
                     : "Marcar como Lida"}
+                </button>
+                <button
+                  onClick={() => dispatch(deleteMessage(conversation.id))}
+                  className="btn btn-sm btn-danger ms-2"
+                  disabled={isMessageOld(subtractThreeHours(conversation.dataHora))}
+                >
+                  Excluir
                 </button>
               </span>
             </div>

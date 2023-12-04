@@ -74,35 +74,35 @@ export const adicionarMensagem = createAsyncThunk(
 
 export const toggleReadStatus = createAsyncThunk(
   "mensagem/toggleReadStatus",
-  async ({ messageId, statusAtual }) => {
-    try {
-      const response = await fetch(`${urlBase}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: messageId,
-          lido: !statusAtual,
-        }),
-      });
+  async ({ id, status }) => {
+    const resposta = await fetch(urlBase, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
 
-      if (response.ok) {
-        const dados = await response.json();
-        return {
-          status: dados.status,
-          mensagem: dados.mensagem,
-          messageId,
-        };
-      } else {
-        throw new Error(
-          "Ocorreu um erro ao atualizar o status de leitura da mensagem."
-        );
-      }
-    } catch (error) {
+      body: JSON.stringify({
+        id: id,
+        lida: false,
+      }),
+    }).catch((erro) => {
       return {
         status: false,
-        mensagem: "Erro ao atualizar o status de leitura: " + error.message,
+        mensagem: "Ocorreu um erro ao atualizar o user:" + erro.message,
+      };
+    });
+    if (resposta.ok) {
+      const dados = await resposta.json();
+      return {
+        status: dados.status,
+        mensagem: dados.mensagem,
+        messageId: id,
+      };
+    } else {
+      return {
+        status: false,
+        mensagem: "Ocorreu um erro ao adicionar o user.",
+        messageId: id,
       };
     }
   }

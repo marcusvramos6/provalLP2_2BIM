@@ -59,7 +59,7 @@ export const Chat = () => {
   };
 
   const handleToggleReadStatus = (messageId, statusAtual) => {
-    dispatch(toggleReadStatus({ messageId, statusAtual }))
+    dispatch(toggleReadStatus({ id: messageId, status: statusAtual }))
       .then((response) => {
         if (response.payload.status) {
           dispatch(buscarMensagens());
@@ -78,19 +78,16 @@ export const Chat = () => {
       <div className="mb-4">
         <h3>Conversas</h3>
         {listaMensagens.map((conversation, index) => {
-          const user = listaUsuarios.find(
-            (u) => u.id === conversation.usuario.id
-          );
           return (
             <div key={index} className="d-flex align-items-center mb-2">
               <img
-                src={user.urlAvatar}
-                alt={user.nickname}
+                src={conversation.usuario?.urlAvatar ?? "avatar"}
+                alt={conversation.usuario?.nickname ?? "nickname"}
                 className="rounded-circle me-2"
                 style={{ width: "30px", height: "30px" }}
               />
               <span>
-                <strong>{user.nickname}:</strong> {conversation.mensagem}
+                <strong>{conversation.usuario.nickname}:</strong> {conversation.mensagem}
                 <br />
                 <small>Enviada em: {conversation.dataHora}</small>
                 <br />
